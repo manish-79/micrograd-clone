@@ -71,6 +71,14 @@ class Value:
     out._backward = _backward
     return out
 
+  def exp(self):
+    x = self.data
+    out = Value(math.exp(x),_op=f"exp({x})",_children=(self,))
+    def _backward():
+      self.grad += out.data * out.grad
+    out._backward = _backward
+    return out
+
   def backward(self):
     topo = []
     visited = set()
